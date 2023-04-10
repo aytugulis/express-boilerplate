@@ -1,33 +1,58 @@
 {
   "env": {
-    "es2020": true,
     "node": true,
-    "jest": true
+    "es2021": true
   },
-  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "plugin:prettier/recommended"],
+  "extends": [
+    "airbnb-base",
+    "airbnb-typescript/base",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:eslint-comments/recommended",
+    "plugin:promise/recommended",
+    "plugin:prettier/recommended"
+  ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 2018,
-    "sourceType": "module"
+    "project": "./tsconfig.eslint.json"
   },
-  "plugins": ["@typescript-eslint"],
+  "ignorePatterns": ["dist/**", "node_modules/**"],
+  "plugins": ["@typescript-eslint", "eslint-comments", "promise", "import", "prettier", "simple-import-sort"],
   "rules": {
-    "prettier/prettier": "error",
-    "no-useless-constructor": "off",
-    "no-unused-vars": "off",
-    "camelcase": "off",
-    "@typescript-eslint/no-unused-vars": [
-      "warn",
+    "no-console": "off",
+    "prettier/prettier": [
+      "error",
       {
-        "argsIgnorePattern": "^_"
+        "endOfLine": "auto"
       }
     ],
-    "class-methods-use-this": "off",
-    "import/extensions": "off"
-  },
-  "settings": {
-    "import/resolver": {
-      "typescript": {}
-    }
+    "import/prefer-default-export": "off",
+    "import/no-default-export": "error",
+    "no-use-before-define": [
+      "error",
+      {
+        "functions": false,
+        "classes": true,
+        "variables": true
+      }
+    ],
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-use-before-define": [
+      "error",
+      {
+        "functions": false,
+        "classes": true,
+        "variables": true,
+        "typedefs": true
+      }
+    ],
+    "import/no-extraneous-dependencies": "off",
+    "promise/always-return": "off",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "import/no-cycle": "off",
+    "eslint-comments/disable-enable-pair": "off",
+    "func-names": "off",
+    "import/no-import-module-exports": "off",
+    "max-classes-per-file": "off"
   }
 }
