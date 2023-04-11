@@ -6,3 +6,15 @@ services:
       dockerfile: Dockerfile
     ports:
       - 5000:5000
+    env_file:
+      - .env
+    environment:
+      - MONGODB_HOST=mongodb
+  mongodb:
+    image: mongo:6.0
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb:/data/db
+volumes:
+  mongodb:

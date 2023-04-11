@@ -5,8 +5,11 @@ import helmet from 'helmet';
 
 import { errorHandler } from './middlewares/error.middleware';
 import { router } from './routers';
+import { connectMongoDB } from './utils/database.util';
 
 const app = express();
+
+connectMongoDB();
 
 app.use(helmet());
 app.use(express.json());

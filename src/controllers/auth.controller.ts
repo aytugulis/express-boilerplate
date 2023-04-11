@@ -8,6 +8,6 @@ interface TestResponse {
   test: string;
 }
 export const test = asyncHandler(async (req: Request, res: Response<TestResponse>) => {
-  const testing = authService.test();
+  const testing = await authService.test();
   res.status(StatusCodes.CREATED).json(testing);
 });
