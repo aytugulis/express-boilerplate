@@ -19,9 +19,6 @@
     "strictPropertyInitialization": false /* Enable strict checking of property initialization in classes. */,
     "strictNullChecks": true /* Enable strict null checks. */
   },
-  "ts-node": {
-    "files": true
-  },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }
