@@ -1,9 +1,10 @@
 import 'dotenv/config';
 
-import express from 'express';
-import helmet from 'helmet';
 import cors from 'cors';
+import express from 'express';
 import mongoSanitize from 'express-mongo-sanitize';
+import helmet from 'helmet';
+
 import { errorHandler } from '@/middlewares/error.middleware';
 import { router } from '@/routers';
 import { connectMongoDB } from '@/utils/database.util';

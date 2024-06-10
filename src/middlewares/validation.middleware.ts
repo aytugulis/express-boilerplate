@@ -1,23 +1,20 @@
-import { AppError } from '@/errors/errors';
 import { Request } from 'express';
 import asyncErrorWrapper from 'express-async-handler';
 import { StatusCodes } from 'http-status-codes';
 import { chain, isNil } from 'lodash';
-import { fromError } from 'zod-validation-error';
 import { z } from 'zod';
+import { fromError } from 'zod-validation-error';
 
-interface ValidateParams<TBody, TParams, TQuery> {
+import { AppError } from '@/errors/errors';
+
+interface ValidateParams {
   body?: z.ZodTypeAny;
   params?: z.ZodTypeAny;
   query?: z.ZodTypeAny;
 }
 
-export const validate = <TBody extends object, TParams extends object, TQuery extends object>({
-  body,
-  params,
-  query,
-}: ValidateParams<TBody, TParams, TQuery>) => {
-  return asyncErrorWrapper(async (req: Request<TParams, unknown, TBody, TQuery>, res, next) => {
+export const validate = ({ body, params, query }: ValidateParams) => {
+  return asyncErrorWrapper(async (req: Request, res, next) => {
     const parsedParams = params?.safeParse(req.params);
     const parsedBody = body?.safeParse(req.body);
     const parsedQuery = query?.safeParse(req.query);
@@ -36,10 +33,13 @@ export const validate = <TBody extends object, TParams extends object, TQuery ex
     }
 
     if (parsedParams?.success) {
+      req.params = parsedParams.data;
     }
     if (parsedBody?.success) {
+      req.body = parsedBody.data;
     }
     if (parsedQuery?.success) {
+      req.query = parsedQuery.data;
     }
 
     next();

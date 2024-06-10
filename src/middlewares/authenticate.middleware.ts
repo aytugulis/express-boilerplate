@@ -1,8 +1,9 @@
-import { UnauthorizedError } from '@/errors/errors';
-import { Payload } from '@/types/authentication.type';
 import asyncErrorWrapper from 'express-async-handler';
 import jwt from 'jsonwebtoken';
 import { isNil } from 'lodash';
+
+import { UnauthorizedError } from '@/errors/errors';
+import { Payload } from '@/types/authentication.type';
 
 const { JWT_SECRET_KEY } = process.env;
 if (!JWT_SECRET_KEY) {

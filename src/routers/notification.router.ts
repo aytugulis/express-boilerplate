@@ -1,4 +1,5 @@
 import { Router } from 'express';
+
 import { forgetPassword, resetPassword } from '@/controllers/notification.controller';
 import { validate } from '@/middlewares/validation.middleware';
 import { forgetPasswordBody, resetPasswordBody, resetPasswordQuery } from '@/schemas/notification.schema';

@@ -1,8 +1,9 @@
-import { ForgetPasswordBody, ResetPasswordBody, ResetPasswordQuery } from '@/schemas/notification.schema';
-import { notificationService } from '@/services/notification.service';
 import { Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
 import { StatusCodes } from 'http-status-codes';
+
+import { ForgetPasswordBody, ResetPasswordBody, ResetPasswordQuery } from '@/schemas/notification.schema';
+import { notificationService } from '@/services/notification.service';
 
 interface ForgetPasswordResponse {
   success: boolean;

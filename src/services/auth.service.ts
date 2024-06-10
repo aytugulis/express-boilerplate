@@ -1,8 +1,9 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+
 import { UserDocument, UserEntity } from '@/entities/user.entity';
-import { ChangePasswordBody, LoginBody, RegisterBody } from '@/schemas/auth.schema';
 import { BadRequestError, NotFoundError, UnauthorizedError } from '@/errors/errors';
+import { ChangePasswordBody, LoginBody, RegisterBody } from '@/schemas/auth.schema';
 import { Payload } from '@/types/authentication.type';
 
 const { JWT_SECRET_KEY, JWT_EXPIRE } = process.env;

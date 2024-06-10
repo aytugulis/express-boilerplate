@@ -2,8 +2,8 @@ import { Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
 import { StatusCodes } from 'http-status-codes';
 
-import { authService } from '@/services/auth.service';
 import { ChangePasswordBody, LoginBody, RegisterBody } from '@/schemas/auth.schema';
+import { authService } from '@/services/auth.service';
 
 interface RegisterResponse {
   token: string;

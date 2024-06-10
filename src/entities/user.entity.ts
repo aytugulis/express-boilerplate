@@ -1,7 +1,7 @@
-import { DocumentType, getModelForClass, modelOptions, prop, pre } from '@typegoose/typegoose';
+import { DocumentType, getModelForClass, modelOptions, pre, prop } from '@typegoose/typegoose';
 import { Base, TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
-import { AnyKeys, HydratedDocument, Types } from 'mongoose';
 import bcrypt from 'bcryptjs';
+import { AnyKeys, HydratedDocument, Types } from 'mongoose';
 
 @modelOptions({
   schemaOptions: {
@@ -9,6 +9,7 @@ import bcrypt from 'bcryptjs';
     id: true,
   },
 })
+// eslint-disable-next-line no-use-before-define
 @pre<User>('save', async function (next) {
   try {
     if (!this.isModified('password')) {

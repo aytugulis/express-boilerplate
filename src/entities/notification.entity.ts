@@ -1,7 +1,9 @@
-import { NotificationAction } from '@/schemas/notification.schema';
-import { DocumentType, Ref, getModelForClass, modelOptions, prop } from '@typegoose/typegoose';
+import { DocumentType, getModelForClass, modelOptions, prop, Ref } from '@typegoose/typegoose';
 import { Base, TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 import { AnyKeys, HydratedDocument, Types } from 'mongoose';
+
+import { NotificationAction } from '@/schemas/notification.schema';
+
 import { User } from './user.entity';
 
 @modelOptions({

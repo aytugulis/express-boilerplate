@@ -1,10 +1,11 @@
 import crypto from 'crypto';
 import ejs from 'ejs';
 import nodemailer from 'nodemailer';
+
+import { NotificationDocument, NotificationEntity } from '@/entities/notification.entity';
 import { UserEntity } from '@/entities/user.entity';
 import { NotFoundError, UnauthorizedError } from '@/errors/errors';
 import { ForgetPasswordBody, notificationAction } from '@/schemas/notification.schema';
-import { NotificationDocument, NotificationEntity } from '@/entities/notification.entity';
 
 const { RESET_PASSWORD_EXPIRE_IN_MIN, SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS } = process.env;
 if (!RESET_PASSWORD_EXPIRE_IN_MIN || !SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS) {
@@ -19,6 +20,7 @@ type SendEmailParameters = {
   email: string;
   notification: NotificationDocument;
   emailInfo: EmailInfo;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   params: Record<string, any>;
 };
 
@@ -37,7 +39,7 @@ export const notificationService = {
     }
 
     const token = crypto.randomBytes(20).toString('hex');
-    const expireDate = Date.now() + parseInt(RESET_PASSWORD_EXPIRE_IN_MIN) * 60000; // 1 min equal 60000 ms
+    const expireDate = Date.now() + parseInt(RESET_PASSWORD_EXPIRE_IN_MIN, 10) * 60000; // 1 min equal 60000 ms
 
     const notification = await NotificationEntity.create({
       action: notificationAction.Enum.RESET_PASSWORD,
