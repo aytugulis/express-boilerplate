@@ -46,6 +46,7 @@
         "typedefs": true
       }
     ],
+    "import/extensions": "off",
     "import/no-extraneous-dependencies": "off",
     "promise/always-return": "off",
     "simple-import-sort/imports": "error",

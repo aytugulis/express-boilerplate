@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.ts",
-  "type": "module",
   "scripts": {
     "build": "tsc",
     "lint": "eslint --ext .js,.ts .",
