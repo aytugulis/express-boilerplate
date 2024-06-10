@@ -1,7 +1,11 @@
 import { Router } from 'express';
-
-import { test } from '../controllers/auth.controller';
+import { login, register, changePassword } from '@/controllers/auth.controller';
+import { changePasswordBody, loginBody, registerBody } from '@/schemas/auth.schema';
+import { validate } from '@/middlewares/validation.middleware';
+import { authenticate } from '@/middlewares/authenticate.middleware';
 
 export const authRouter = Router();
 
-authRouter.get('/test', test);
+authRouter.post('/register', validate({ body: registerBody }), register);
+authRouter.post('/login', validate({ body: loginBody }), login);
+authRouter.put('/', authenticate, validate({ body: changePasswordBody }), changePassword);

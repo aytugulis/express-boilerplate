@@ -1,10 +1,10 @@
-FROM node:18
+FROM node:20
 
 WORKDIR /usr/app
 
 COPY package.json .
-RUN yarn
+RUN pnpm
 COPY . .
 
 EXPOSE 5000
-CMD ["yarn", "start"]
+CMD ["pnpm", "start"]
