@@ -42,6 +42,7 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, _) => {
 
   res.status(customError.status || StatusCodes.INTERNAL_SERVER_ERROR).json({
     message: customError.message,
+    details: customError.details,
     stack: process.env.NODE_ENV === 'development' ? customError.stack : undefined,
   });
 };

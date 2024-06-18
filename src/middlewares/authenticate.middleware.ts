@@ -1,6 +1,5 @@
 import asyncErrorWrapper from 'express-async-handler';
 import jwt from 'jsonwebtoken';
-import { isNil } from 'lodash';
 
 import { UnauthorizedError } from '@/errors/errors';
 import { Payload } from '@/types/authentication.type';
@@ -24,14 +23,13 @@ const verifyJwtAsync = (token: string, secret: string) => {
 
 export const authenticate = asyncErrorWrapper(async (req, res, next) => {
   const authorizationHeader = req.headers.authorization;
-  const isTokenIncluded = !isNil(authorizationHeader) && authorizationHeader.startsWith('Bearer ');
-
-  const authToken = req.headers.authorization?.split(' ')[1] ?? '';
+  const isTokenIncluded = authorizationHeader?.startsWith('Bearer ');
 
   if (!isTokenIncluded) {
     throw new UnauthorizedError();
   }
 
+  const authToken = authorizationHeader?.split(' ')[1] ?? '';
   const decoded = await verifyJwtAsync(authToken, JWT_SECRET_KEY);
 
   req.user = { id: decoded.id, username: decoded.username, email: decoded.email };

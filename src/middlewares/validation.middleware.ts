@@ -1,7 +1,6 @@
 import { Request } from 'express';
 import asyncErrorWrapper from 'express-async-handler';
 import { StatusCodes } from 'http-status-codes';
-import { chain, isNil } from 'lodash';
 import { z } from 'zod';
 import { fromError } from 'zod-validation-error';
 
@@ -19,28 +18,26 @@ export const validate = ({ body, params, query }: ValidateParams) => {
     const parsedBody = body?.safeParse(req.body);
     const parsedQuery = query?.safeParse(req.query);
 
-    const paramsErrors = params && !parsedParams?.success && fromError(parsedParams?.error).toString();
-    const bodyErrors = body && !parsedBody?.success && fromError(parsedBody?.error).toString();
-    const queryErrors = query && !parsedQuery?.success && fromError(parsedQuery?.error).toString();
+    const errors: string[] = [];
+    if (params && !parsedParams?.success) {
+      errors.push(fromError(parsedParams?.error).toString());
+    }
+    if (body && !parsedBody?.success) {
+      errors.push(fromError(parsedBody?.error).toString());
+    }
+    if (query && !parsedQuery?.success) {
+      errors.push(fromError(parsedQuery?.error).toString());
+    }
 
-    const errors = chain([bodyErrors, paramsErrors, queryErrors]).compact().flatten().value();
-
-    const firstErrorMessage: string | undefined = chain(errors).first().value();
-
-    if (!isNil(firstErrorMessage)) {
-      next(new AppError(StatusCodes.BAD_REQUEST, firstErrorMessage, errors));
+    if (errors.length) {
+      const errorMessage = errors.join(',\n');
+      next(new AppError(StatusCodes.BAD_REQUEST, errorMessage, errors));
       return;
     }
 
-    if (parsedParams?.success) {
-      req.params = parsedParams.data;
-    }
-    if (parsedBody?.success) {
-      req.body = parsedBody.data;
-    }
-    if (parsedQuery?.success) {
-      req.query = parsedQuery.data;
-    }
+    req.params = parsedParams?.success ? parsedParams.data : req.params;
+    req.body = parsedBody?.success ? parsedBody.data : req.body;
+    req.query = parsedQuery?.success ? parsedQuery.data : req.query;
 
     next();
   });
