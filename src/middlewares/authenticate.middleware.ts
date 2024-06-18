@@ -5,9 +5,6 @@ import { UnauthorizedError } from '@/errors/errors';
 import { Payload } from '@/types/authentication.type';
 
 const { JWT_SECRET_KEY } = process.env;
-if (!JWT_SECRET_KEY) {
-  throw new Error('⛔ Missing JWT credentials');
-}
 
 const verifyJwtAsync = (token: string, secret: string) => {
   return new Promise<Payload>((resolve, reject) => {

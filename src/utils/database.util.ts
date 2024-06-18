@@ -1,9 +1,6 @@
 import { connect } from 'mongoose';
 
 const { MONGODB_HOST, MONGODB_NAME, MONGODB_PORT } = process.env;
-if (!MONGODB_HOST || !MONGODB_NAME || !MONGODB_PORT) {
-  throw new Error('⛔ Missing mongodb credentials');
-}
 
 export const connectMongoDB = async () => {
   try {

@@ -7,9 +7,6 @@ import { ChangePasswordBody, LoginBody, RegisterBody } from '@/schemas/auth.sche
 import { Payload } from '@/types/authentication.type';
 
 const { JWT_SECRET_KEY, JWT_EXPIRE } = process.env;
-if (!JWT_SECRET_KEY || !JWT_EXPIRE) {
-  throw new Error('⛔ Missing JWT credentials');
-}
 
 export const authService = {
   async register(data: RegisterBody) {

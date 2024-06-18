@@ -10,6 +10,13 @@ import { router } from '@/routers';
 import { connectMongoDB } from '@/utils/database.util';
 import { ejsFileLoader } from '@/utils/library.util';
 
+import { environmentVariable } from './schemas/common.schema';
+
+const parsedEnvironment = environmentVariable.safeParse(process.env);
+if (!parsedEnvironment.success) {
+  throw new Error('⛔ Missing environment variables');
+}
+
 const app = express();
 
 connectMongoDB();

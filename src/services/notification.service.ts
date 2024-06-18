@@ -8,9 +8,6 @@ import { NotFoundError, UnauthorizedError } from '@/errors/errors';
 import { ForgetPasswordBody, notificationAction } from '@/schemas/notification.schema';
 
 const { RESET_PASSWORD_EXPIRE_IN_MIN, SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS } = process.env;
-if (!RESET_PASSWORD_EXPIRE_IN_MIN || !SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS) {
-  throw new Error('⛔ Missing environment credentials');
-}
 
 enum TemplateType {
   FORGET_PASSWORD = 'FORGET_PASSWORD',
@@ -91,7 +88,7 @@ export const notificationService = {
       const emailTemplate = await ejs.renderFile(emailInfo.html, params);
 
       const info = await transporter.sendMail({
-        from: process.env.SMTP_USER,
+        from: SMTP_USER,
         to: email,
         subject: emailInfo.subject,
         html: emailTemplate,

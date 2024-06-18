@@ -32,7 +32,7 @@ export const login = asyncHandler(async (req: Request<unknown, unknown, LoginBod
 
 export const changePassword = asyncHandler(
   async (req: Request<unknown, unknown, ChangePasswordBody>, res: Response<ChangePasswordResponse>) => {
-    await authService.changePassword(req.body, req.user?.id);
+    await authService.changePassword(req.body, req.user.id);
     res.status(StatusCodes.OK).json({ success: true, message: 'Password changed' });
   },
 );

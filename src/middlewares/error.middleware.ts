@@ -3,6 +3,8 @@ import { StatusCodes } from 'http-status-codes';
 
 import { AppError, BadRequestError, NotFoundError } from '@/errors/errors';
 
+const { NODE_ENV } = process.env;
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const errorHandler: ErrorRequestHandler = (err, req, res, _) => {
   let customError = err;
@@ -32,7 +34,7 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, _) => {
     message: customError.message,
   };
   // Show error stack only in development
-  if (process.env.NODE_ENV === 'development' && err.stack) {
+  if (NODE_ENV === 'development' && err.stack) {
     resObj.stack = err.stack;
   }
 
@@ -43,6 +45,6 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, _) => {
   res.status(customError.status || StatusCodes.INTERNAL_SERVER_ERROR).json({
     message: customError.message,
     details: customError.details,
-    stack: process.env.NODE_ENV === 'development' ? customError.stack : undefined,
+    stack: NODE_ENV === 'development' ? customError.stack : undefined,
   });
 };
